@@ -86,3 +86,7 @@ create policy "authenticated read"
   for select
   to authenticated
   using (true);
+
+grant usage on schema public to authenticated, service_role;
+grant select on table public.bestellungen to authenticated;
+grant all on table public.bestellungen to service_role;  

@@ -49,40 +49,22 @@ export async function getOrderById(client: AppSupabaseClient, id: string): Promi
 }
 
 export async function getKpis(client: AppSupabaseClient): Promise<DashboardKpis> {
-	const startOfToday = new Date();
-	startOfToday.setHours(0, 0, 0, 0);
+	const { data, error } = await client.from('bestellungen').select('status, erstellt_am');
 
-	const [gesamtRes, heuteRes, fehlerhaftRes, uebermitteltRes, inPruefungRes] = await Promise.all([
-		client.from('bestellungen').select('*', { count: 'exact', head: true }),
-		client
-			.from('bestellungen')
-			.select('*', { count: 'exact', head: true })
-			.gte('erstellt_am', startOfToday.toISOString()),
-		client
-			.from('bestellungen')
-			.select('*', { count: 'exact', head: true })
-			.eq('status', 'fehlerhaft'),
-		client
-			.from('bestellungen')
-			.select('*', { count: 'exact', head: true })
-			.eq('status', 'uebermittelt'),
-		client
-			.from('bestellungen')
-			.select('*', { count: 'exact', head: true })
-			.eq('status', 'in_pruefung')
-	]);
-
-	for (const res of [gesamtRes, heuteRes, fehlerhaftRes, uebermitteltRes, inPruefungRes]) {
-		if (res.error) {
-			throw new Error(`Fehler bei KPI-Aggregation: ${res.error.message}`);
-		}
+	if (error) {
+		throw new Error(
+			`Fehler bei KPI-Aggregation: ${error.message || error.code || JSON.stringify(error)}`
+		);
 	}
 
-	const gesamt = gesamtRes.count ?? 0;
-	const heute = heuteRes.count ?? 0;
-	const fehlerhaft = fehlerhaftRes.count ?? 0;
-	const uebermittelt = uebermitteltRes.count ?? 0;
-	const inPruefung = inPruefungRes.count ?? 0;
+	const rows = data ?? [];
+	const todayIsoPrefix = new Date().toISOString().slice(0, 10);
+
+	const gesamt = rows.length;
+	const heute = rows.filter((r) => r.erstellt_am.slice(0, 10) === todayIsoPrefix).length;
+	const fehlerhaft = rows.filter((r) => r.status === 'fehlerhaft').length;
+	const uebermittelt = rows.filter((r) => r.status === 'uebermittelt').length;
+	const inPruefung = rows.filter((r) => r.status === 'in_pruefung').length;
 	const fehlerquoteProzent = gesamt > 0 ? Math.round((fehlerhaft / gesamt) * 1000) / 10 : 0;
 
 	return {
