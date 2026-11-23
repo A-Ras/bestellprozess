@@ -1,0 +1,6 @@
+npx sv create bestellprozess
+cd bestellprozess
+npm install @supabase/supabase-js @supabase/ssr zod lucide-svelte
+git init
+git add .
+git commit -m "chore: initialize SvelteKit project with TypeScript, Tailwind, Vitest and Supabase deps"
