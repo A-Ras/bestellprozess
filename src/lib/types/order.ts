@@ -1,3 +1,5 @@
+import type { Database, Json } from './database.ts';
+
 export const ORDER_STATUSES = ['neu', 'in_pruefung', 'fehlerhaft', 'uebermittelt'] as const;
 
 export type OrderStatus = (typeof ORDER_STATUSES)[number];
@@ -12,20 +14,8 @@ export interface OrderExtraction {
 	quelle?: string;
 }
 
-export interface Order {
-	id: string;
-	kundenname: string | null;
-	artikelnummer: string | null;
-	menge: number | null;
-	bestelldatum: string | null;
-	lieferadresse: string | null;
-	status: OrderStatus;
-	fehlergrund: string | null;
-	erp_id: string | null;
-	rohdaten: Record<string, unknown> | null;
-	erstellt_am: string;
-	aktualisiert_am: string;
-}
+export type Order = Database['public']['Tables']['bestellungen']['Row'];
+export type OrderJson = Json;
 
 export interface DashboardKpis {
 	gesamt: number;

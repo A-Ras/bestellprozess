@@ -26,3 +26,13 @@ npx vitest run --project server
 
 git add .
 git commit -m "feat(core): add env config, order types, zod schemas, services and unit tests"
+
+npm run prepare
+npm run check
+npm run format
+npm run lint
+npx vitest run --project server
+                    
+npm run check && npm run lint && npx vitest run --project server
+git add .
+git commit -m "feat(auth): add Supabase SSR client, admin client, hooks guard and order service"                    
