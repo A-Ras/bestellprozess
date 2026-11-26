@@ -2,7 +2,7 @@ import type { Database, Json } from './database.ts';
 
 export const ORDER_STATUSES = ['neu', 'in_pruefung', 'fehlerhaft', 'uebermittelt'] as const;
 
-export type OrderStatus = (typeof ORDER_STATUSES)[number];
+export type OrderStatus = (typeof ORDER_STATUSES)[number]; // why number? because we want the type to be the values of the array, not the indices
 
 export interface OrderExtraction {
 	kundenname: string | null;

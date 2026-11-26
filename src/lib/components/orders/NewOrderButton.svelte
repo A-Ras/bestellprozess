@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { refreshAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { TriangleAlert, LoaderCircle, CirclePlus } from 'lucide-svelte';
+	import CirclePlus from 'lucide-svelte/icons/circle-plus';
+	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
+	import TriangleAlert from 'lucide-svelte/icons/triangle-alert';
 
 	let isLoading = $state(false);
 	let feedback = $state<{ type: 'success' | 'error'; message: string } | null>(null);

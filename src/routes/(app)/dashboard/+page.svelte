@@ -2,7 +2,10 @@
 	import KpiCard from '#lib/components/dashboard/KpiCard.svelte';
 	import NewOrderButton from '#lib/components/orders/NewOrderButton.svelte';
 	import OrderTable from '#lib/components/orders/OrderTable.svelte';
-	import { AlertCircle, CalendarCheck, CheckCircle2, Clock } from 'lucide-svelte';
+	import CalendarCheck from 'lucide-svelte/icons/calendar-check';
+	import CircleAlert from 'lucide-svelte/icons/circle-alert';
+	import CircleCheck from 'lucide-svelte/icons/circle-check';
+	import Clock from 'lucide-svelte/icons/clock';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -46,7 +49,7 @@
 			tone="red"
 		>
 			{#snippet icon()}
-				<AlertCircle class="h-5 w-5" />
+				<CircleAlert class="h-5 w-5" />
 			{/snippet}
 		</KpiCard>
 
@@ -68,7 +71,7 @@
 			tone="emerald"
 		>
 			{#snippet icon()}
-				<CheckCircle2 class="h-5 w-5" />
+				<CircleCheck class="h-5 w-5" />
 			{/snippet}
 		</KpiCard>
 	</section>

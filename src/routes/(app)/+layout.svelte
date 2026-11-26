@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { resolve } from '$app/paths';
-	import { LogOut, PackageCheck } from 'lucide-svelte';
+	import LogOut from 'lucide-svelte/icons/log-out';
+	import PackageCheck from 'lucide-svelte/icons/package-check';
 	import type { Snippet } from 'svelte';
 	import type { LayoutData } from './$types';
 

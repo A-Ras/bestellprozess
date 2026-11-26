@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Lock, Mail, PackageCheck } from 'lucide-svelte';
+	import Lock from 'lucide-svelte/icons/lock';
+	import Mail from 'lucide-svelte/icons/mail';
+	import PackageCheck from 'lucide-svelte/icons/package-check';
 	import type { ActionData } from './$types';
 
 	let { form }: { form: ActionData } = $props();

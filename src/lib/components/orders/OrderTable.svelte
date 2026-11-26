@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import StatusBadge from '#lib/components/dashboard/StatusBadge.svelte';
 	import type { Order, OrderStatus } from '#lib/types/order.ts';
-	import { ArrowRight } from 'lucide-svelte';
+	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 
 	let { orders }: { orders: Order[] } = $props();
 	let statusFilter = $state<'alle' | OrderStatus>('alle');

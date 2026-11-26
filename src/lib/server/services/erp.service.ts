@@ -26,7 +26,7 @@ export const stubErpService: ErpService = {
 			};
 		}
 
-		const shortRef = orderId.slice(0, 6).toUpperCase();
+		const shortRef = orderId.slice(0, 6).toUpperCase(); // Kurze Referenz aus der Bestell-ID generieren
 		const year = new Date().getFullYear();
 
 		return {

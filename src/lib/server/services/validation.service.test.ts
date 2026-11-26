@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest'; // it shortcut for "it should"
 import { validateOrderExtraction } from './validation.service.ts';
 
 describe('validateOrderExtraction', () => {

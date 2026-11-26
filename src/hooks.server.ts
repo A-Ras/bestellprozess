@@ -50,27 +50,32 @@ const supabaseHandle: Handle = async ({ event, resolve }) => {
 };
 
 const authGuard: Handle = async ({ event, resolve }) => {
+	event.locals.session = null;
+	event.locals.user = null;
+
+	const routeId = event.route.id ?? '';
+	const isProtectedPage = routeId.startsWith('/(app)');
+	const isProtectedApi = routeId.startsWith('/api/');
+	const isLoginPage = routeId === '/(auth)/login';
+
+	// Öffentliche Seiten / unbekannte 404-Routen benötigen keine Auth-Abfrage
+	if (!isProtectedPage && !isProtectedApi && !isLoginPage) {
+		return resolve(event);
+	}
+
 	const { session, user } = await event.locals.safeGetSession();
 	event.locals.session = session;
 	event.locals.user = user;
 
-	const path = event.url.pathname;
-
-	// Geschützte Seiten umleiten
-	if (!session && (path.startsWith('/dashboard') || path.startsWith('/orders'))) {
+	if (isProtectedPage && !session) {
 		redirect(303, '/login');
 	}
 
-	// Geschützte API-Routen sauber mit 401 beantworten
-	if (!session && path.startsWith('/api/')) {
-		return new Response(JSON.stringify({ error: 'Nicht authentifiziert' }), {
-			status: 401,
-			headers: { 'content-type': 'application/json' }
-		});
+	if (isProtectedApi && !session) {
+		return Response.json({ error: 'Nicht authentifiziert' }, { status: 401 });
 	}
 
-	// Bereits eingeloggte Nutzer nicht auf /login lassen
-	if (session && path === '/login') {
+	if (session && isLoginPage) {
 		redirect(303, '/dashboard');
 	}
 

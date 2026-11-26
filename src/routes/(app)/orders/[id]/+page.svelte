@@ -2,7 +2,11 @@
 	import { refreshAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import StatusBadge from '#lib/components/dashboard/StatusBadge.svelte';
-	import { AlertTriangle, ArrowLeft, CheckCircle2, Save, Send } from 'lucide-svelte';
+	import ArrowLeft from 'lucide-svelte/icons/arrow-left';
+	import CircleCheck from 'lucide-svelte/icons/circle-check';
+	import Save from 'lucide-svelte/icons/save';
+	import Send from 'lucide-svelte/icons/send';
+	import TriangleAlert from 'lucide-svelte/icons/triangle-alert';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -107,7 +111,7 @@
 			<div
 				class="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800"
 			>
-				<AlertTriangle class="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
+				<TriangleAlert class="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
 				<div>
 					<p class="font-semibold">Validierungs- / Verarbeitungsfehler</p>
 					<p class="mt-0.5">{data.order.fehlergrund}</p>
@@ -119,7 +123,7 @@
 			<div
 				class="mt-5 flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800"
 			>
-				<CheckCircle2 class="h-5 w-5 shrink-0 text-emerald-600" />
+				<CircleCheck class="h-5 w-5 shrink-0 text-emerald-600" />
 				<div>
 					Erfolgreich an das ERP übermittelt – Referenz:
 					<span class="font-mono font-semibold">{data.order.erp_id}</span>
@@ -183,7 +187,7 @@
 
 				<div>
 					<label for="bestelldatum" class="mb-1 block text-sm font-medium text-slate-700">
-						Bestelldatum (YYYY-MM-DD)
+						Bestelldatum
 					</label>
 					<input
 						id="bestelldatum"
